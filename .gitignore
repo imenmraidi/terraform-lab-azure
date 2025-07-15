@@ -1,0 +1,21 @@
+*.tfvars
+# Terraform files
+.terraform/
+*.tfstate
+*.tfstate.backup
+crash.log
+*.log
+terraform.tfvars
+
+# Optional: add example config for others
+terraform.tfvars.example
+
+# IDE / OS junk
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Plan output
+*.plan
+plan.out
