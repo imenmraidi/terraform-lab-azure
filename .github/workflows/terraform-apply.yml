@@ -1,0 +1,98 @@
+# name: Terraform Apply Reusable
+
+# on:
+#   workflow_call:
+#     inputs:
+#       tf_directory:
+#         required: true
+#         type: string
+#       environment:
+#         required: true
+#         type: string
+#     secrets:
+#       AZURE_CLIENT_ID:
+#         required: true
+#       AZURE_TENANT_ID:
+#         required: true
+#       AZURE_SUBSCRIPTION_ID:
+#         required: true
+
+# jobs:
+#   terraform:
+#     name: Terraform Apply
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: ⬇️ Checkout code
+#         uses: actions/checkout@v3
+
+#       - name: 🔐 Azure Login via OIDC
+#         uses: azure/login@v1
+#         with:
+#           client-id: ${{ secrets.AZURE_CLIENT_ID }}
+#           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+#           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+#       - name: ⚙️ Setup Terraform
+#         uses: hashicorp/setup-terraform@v2
+#         with:
+#           terraform_version: 1.6.6
+
+#       - name: 📂 Change to Terraform directory
+#         working-directory: ${{ inputs.tf_directory }}
+#         run: "echo Using directory: ${{ inputs.tf_directory }}"
+
+#       - name: 🧱 Terraform Init
+#         working-directory: ${{ inputs.tf_directory }}
+#         run: terraform init
+
+#       - name: 🔍 Terraform Plan
+#         working-directory: ${{ inputs.tf_directory }}
+#         run: terraform plan
+
+#       - name: 🚀 Terraform Apply
+#         working-directory: ${{ inputs.tf_directory }}
+#         run: terraform apply -auto-approve
+
+#       - name: ✅ Done
+#         run: echo "Terraform apply finished for ${{ inputs.environment }}"
+
+# .github/workflows/terraform-apply.yml
+name: Terraform Apply
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+    secrets:
+      AZURE_CREDENTIALS:
+        required: true
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.7.5
+
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve

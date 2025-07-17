@@ -1,0 +1,34 @@
+# name: Deploy Terraform on Merge to Main
+
+# on:
+#   push:
+#     branches:
+#       - main
+
+# jobs:
+#   deploy:
+#     uses: ./.github/workflows/terraform-reusable.yml
+#     with:
+#       tf_directory: './infra' # change to where your .tf files live
+#       environment: 'production'
+#     secrets:
+#       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+#       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+#       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+
+# .github/workflows/on-merge-to-main.yml
+name: Deploy Infra to Prod
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    uses: your-org/your-repo/.github/workflows/terraform-apply.yml@main
+    with:
+      environment: 'prod'
+    secrets:
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
