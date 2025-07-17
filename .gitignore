@@ -1,14 +1,13 @@
-*.tfvars
 # Terraform files
 .terraform/
 *.tfstate
 *.tfstate.backup
 crash.log
 *.log
-terraform.tfvars
+# terraform.tfvars
 
 # Optional: add example config for others
-terraform.tfvars.example
+# terraform.tfvars.example
 
 # IDE / OS junk
 .vscode/
