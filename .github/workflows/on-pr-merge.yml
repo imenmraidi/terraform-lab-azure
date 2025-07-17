@@ -17,7 +17,7 @@
 #       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
 
-# .github/workflows/on-merge-to-main.yml
+# .github/workflows/on-merge-to-main.yml file
 name: Deploy Infra to Prod
 
 on:
