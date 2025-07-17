@@ -27,7 +27,7 @@ on:
 
 jobs:
   deploy:
-    uses: .github\workflows\terraform-apply.yml
+    uses: .github/workflows/terraform-apply.yml@main
     with:
       environment: 'prod'
     secrets:
